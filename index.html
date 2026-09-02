@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HealthyMe</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR (desktop/tablet) -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="img/HealthyMe.png" alt="HealthyMe" class="sidebar-logo" />
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item active" data-page="dashboard">
+        <span class="nav-icon">🏠</span><span class="nav-label">Início</span>
+      </li>
+      <li class="nav-item" data-page="hydration">
+        <span class="nav-icon">💧</span><span class="nav-label">Hidratação</span>
+      </li>
+      <li class="nav-item" data-page="activity">
+        <span class="nav-icon">🏃</span><span class="nav-label">Atividade Física</span>
+      </li>
+      <li class="nav-item" data-page="sleep">
+        <span class="nav-icon">😴</span><span class="nav-label">Sono</span>
+      </li>
+      <li class="nav-item" data-page="goals">
+        <span class="nav-icon">🎯</span><span class="nav-label">Metas</span>
+      </li>
+      <li class="nav-item" data-page="progress">
+        <span class="nav-icon">📊</span><span class="nav-label">Meu Progresso</span>
+      </li>
+      <li class="nav-item" data-page="content">
+        <span class="nav-icon">📚</span><span class="nav-label">Aprender</span>
+      </li>
+      <li class="nav-item" data-page="profile">
+        <span class="nav-icon">👤</span><span class="nav-label">Perfil</span>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <p class="ods-badge">🌍 ODS 3 — Saúde e Bem-Estar</p>
+    </div>
+  </nav>
+
+  <!-- BOTTOM NAV (mobile) -->
+  <nav class="bottom-nav" id="bottomNav">
+    <div class="bottom-nav-item active" data-page="dashboard"><span>🏠</span><small>Início</small></div>
+    <div class="bottom-nav-item" data-page="hydration"><span>💧</span><small>Água</small></div>
+    <div class="bottom-nav-item" data-page="activity"><span>🏃</span><small>Ativ.</small></div>
+    <div class="bottom-nav-item" data-page="sleep"><span>😴</span><small>Sono</small></div>
+    <div class="bottom-nav-item" data-page="goals"><span>🎯</span><small>Metas</small></div>
+    <div class="bottom-nav-item" data-page="progress"><span>📊</span><small>Progresso</small></div>
+    <div class="bottom-nav-item" data-page="content"><span>📚</span><small>Aprender</small></div>
+    <div class="bottom-nav-item" data-page="profile"><span>👤</span><small>Perfil</small></div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+
+    <!-- ===== DASHBOARD ===== -->
+    <section class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div>
+          <h1 id="greetingText">Olá! 👋</h1>
+          <p class="subtitle" id="greetingSubtitle">Como está seu bem-estar hoje?</p>
+        </div>
+        <div class="points-badge" id="dashboardPoints">
+          <span>⭐</span>
+          <span id="pointsDisplay">0 pts</span>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card summary-card clickable" data-page="hydration">
+          <div class="card-icon">💧</div>
+          <div class="card-info">
+            <span class="card-label">Água</span>
+            <span class="card-value" id="dashWater">0 ml</span>
+            <span class="card-sub" id="dashWaterGoal">Meta: 2.000 ml</span>
+          </div>
+          <div class="card-progress-wrap">
+            <div class="progress-bar"><div class="progress-fill water-fill" id="dashWaterBar" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div class="card summary-card clickable" data-page="activity">
+          <div class="card-icon">🏃</div>
+          <div class="card-info">
+            <span class="card-label">Atividade</span>
+            <span class="card-value" id="dashActivity">0 min</span>
+            <span class="card-sub" id="dashActivitySub">hoje</span>
+          </div>
+          <div class="card-progress-wrap">
+            <div class="progress-bar"><div class="progress-fill activity-fill" id="dashActivityBar" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div class="card summary-card clickable" data-page="sleep">
+          <div class="card-icon">😴</div>
+          <div class="card-info">
+            <span class="card-label">Sono</span>
+            <span class="card-value" id="dashSleep">--</span>
+            <span class="card-sub" id="dashSleepSub">última noite</span>
+          </div>
+          <div class="card-progress-wrap">
+            <div class="progress-bar"><div class="progress-fill sleep-fill" id="dashSleepBar" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div class="card summary-card clickable" data-page="goals">
+          <div class="card-icon">🎯</div>
+          <div class="card-info">
+            <span class="card-label">Metas</span>
+            <span class="card-value" id="dashGoals">0/0</span>
+            <span class="card-sub">concluídas hoje</span>
+          </div>
+          <div class="card-progress-wrap">
+            <div class="progress-bar"><div class="progress-fill goals-fill" id="dashGoalsBar" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card motivational-card" id="motivationalCard">
+        <p id="motivationalText">Carregando sua mensagem do dia... 🌱</p>
+      </div>
+
+      <div class="card level-card">
+        <div class="level-info">
+          <div>
+            <p class="level-label">Seu nível</p>
+            <p class="level-name" id="dashLevel">Iniciante 🌱</p>
+          </div>
+          <div class="level-points">
+            <span id="dashTotalPoints">0</span>
+            <small>pontos</small>
+          </div>
+        </div>
+        <div class="progress-bar" style="margin-top:10px">
+          <div class="progress-fill points-fill" id="dashLevelBar" style="width:0%"></div>
+        </div>
+        <p class="level-next" id="dashLevelNext"></p>
+      </div>
+    </section>
+
+    <!-- ===== HIDRATAÇÃO ===== -->
+    <section class="page" id="page-hydration">
+      <div class="page-header">
+        <h1>💧 Hidratação</h1>
+        <p class="subtitle">Acompanhe seu consumo de água diário</p>
+      </div>
+
+      <div class="card hydration-main-card">
+        <div class="hydration-circle-wrap">
+          <div class="hydration-circle">
+            <svg viewBox="0 0 120 120" class="circle-svg">
+              <circle cx="60" cy="60" r="52" class="circle-bg"/>
+              <circle cx="60" cy="60" r="52" class="circle-progress" id="hydCircle"
+                stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+            </svg>
+            <div class="circle-text">
+              <span class="circle-amount" id="hydAmount">0</span>
+              <span class="circle-unit">ml</span>
+            </div>
+          </div>
+        </div>
+        <div class="hydration-stats">
+          <div class="hyd-stat">
+            <span class="hyd-stat-label">Consumido</span>
+            <span class="hyd-stat-val" id="hydConsumed">0 ml</span>
+          </div>
+          <div class="hyd-stat">
+            <span class="hyd-stat-label">Restante</span>
+            <span class="hyd-stat-val" id="hydRemaining">2.000 ml</span>
+          </div>
+          <div class="hyd-stat">
+            <span class="hyd-stat-label">Meta</span>
+            <span class="hyd-stat-val" id="hydGoalDisplay">2.000 ml</span>
+          </div>
+        </div>
+        <p class="hydration-message" id="hydMessage">Vamos começar o dia bem hidratado! 💪</p>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Adicionar água</h3>
+        <div class="quick-buttons">
+          <button class="btn btn-water" onclick="addWater(250)">+ 250 ml</button>
+          <button class="btn btn-water" onclick="addWater(500)">+ 500 ml</button>
+          <button class="btn btn-water" onclick="addWater(750)">+ 750 ml</button>
+        </div>
+        <div class="custom-add-row">
+          <input type="number" id="customWaterInput" class="input-field" placeholder="Quantidade (ml)" min="1" max="2000" />
+          <button class="btn btn-primary" onclick="addCustomWater()">Adicionar</button>
+        </div>
+        <button class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="undoLastWater()">↩ Desfazer último registro</button>
+      </div>
+
+      <div class="card">
+        <div class="section-header-row">
+          <h3 class="section-title">Meta diária</h3>
+          <button class="btn btn-ghost btn-sm" onclick="toggleGoalEdit()">Editar</button>
+        </div>
+        <div id="goalEditArea" style="display:none">
+          <div class="custom-add-row" style="margin-top:10px">
+            <input type="number" id="hydGoalInput" class="input-field" placeholder="Meta em ml (ex: 2000)" min="500" max="6000" />
+            <button class="btn btn-primary" onclick="saveHydGoal()">Salvar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Histórico de hoje</h3>
+        <div id="hydHistoryList" class="history-list">
+          <p class="empty-text">Nenhum registro ainda hoje.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ATIVIDADE FÍSICA ===== -->
+    <section class="page" id="page-activity">
+      <div class="page-header">
+        <h1>🏃 Atividade Física</h1>
+        <p class="subtitle">Registre seus exercícios e movimentos</p>
+      </div>
+
+      <div class="card activity-summary-card">
+        <div class="act-summary-grid">
+          <div class="act-stat">
+            <span class="act-stat-icon">📅</span>
+            <span class="act-stat-val" id="actWeekCount">0</span>
+            <span class="act-stat-label">atividades esta semana</span>
+          </div>
+          <div class="act-stat">
+            <span class="act-stat-icon">⏱️</span>
+            <span class="act-stat-val" id="actWeekMin">0</span>
+            <span class="act-stat-label">minutos no total</span>
+          </div>
+        </div>
+        <p class="act-summary-msg" id="actSummaryMsg">Comece registrando sua primeira atividade!</p>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Registrar atividade</h3>
+        <div class="form-group">
+          <label class="form-label" for="actType">Tipo de atividade</label>
+          <select id="actType" class="input-field">
+            <option value="Caminhada">🚶 Caminhada</option>
+            <option value="Corrida">🏃 Corrida</option>
+            <option value="Academia">🏋️ Academia</option>
+            <option value="Bicicleta">🚴 Bicicleta</option>
+            <option value="Alongamento">🧘 Alongamento</option>
+            <option value="Esporte">⚽ Esporte</option>
+            <option value="Outro">✨ Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="actDuration">Duração (minutos)</label>
+          <input type="number" id="actDuration" class="input-field" placeholder="Ex: 30" min="1" max="600" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="actDate">Data</label>
+          <input type="date" id="actDate" class="input-field" />
+        </div>
+        <button class="btn btn-primary btn-full" onclick="saveActivity()">Salvar atividade</button>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Histórico de atividades</h3>
+        <div id="activityList" class="history-list">
+          <p class="empty-text">Nenhuma atividade registrada ainda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SONO ===== -->
+    <section class="page" id="page-sleep">
+      <div class="page-header">
+        <h1>😴 Sono</h1>
+        <p class="subtitle">Monitore a qualidade do seu descanso</p>
+      </div>
+
+      <div class="card sleep-summary-card">
+        <div class="sleep-last">
+          <span class="sleep-icon-big">🌙</span>
+          <div>
+            <p class="sleep-last-label">Última noite</p>
+            <p class="sleep-last-val" id="sleepLastVal">Sem registro</p>
+          </div>
+        </div>
+        <div class="progress-bar" style="margin-top:12px">
+          <div class="progress-fill sleep-fill" id="sleepLastBar" style="width:0%"></div>
+        </div>
+        <p class="sleep-goal-text" id="sleepGoalText">Meta: 8 horas</p>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Registrar sono</h3>
+        <div class="form-group">
+          <label class="form-label" for="sleepDate">Data (dia que dormiu)</label>
+          <input type="date" id="sleepDate" class="input-field" />
+        </div>
+        <div class="sleep-times-row">
+          <div class="form-group">
+            <label class="form-label" for="sleepStart">Dormiu às</label>
+            <input type="time" id="sleepStart" class="input-field" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sleepEnd">Acordou às</label>
+            <input type="time" id="sleepEnd" class="input-field" />
+          </div>
+        </div>
+        <div class="sleep-preview" id="sleepPreview" style="display:none">
+          <span>⏱️ Duração calculada: <strong id="sleepCalcDuration"></strong></span>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="saveSleep()">Salvar registro de sono</button>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Histórico de sono</h3>
+        <div id="sleepHistoryChart" class="sleep-chart-wrap"></div>
+        <div id="sleepList" class="history-list">
+          <p class="empty-text">Nenhum registro de sono ainda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== METAS ===== -->
+    <section class="page" id="page-goals">
+      <div class="page-header">
+        <h1>🎯 Metas</h1>
+        <p class="subtitle">Defina e acompanhe seus objetivos pessoais</p>
+      </div>
+
+      <div class="card goals-summary-card">
+        <div class="goals-summary-row">
+          <div>
+            <p class="goals-summary-label">Progresso de hoje</p>
+            <p class="goals-summary-val" id="goalsSummaryVal">0/0 concluídas</p>
+          </div>
+          <div class="goals-percent" id="goalsPercent">0%</div>
+        </div>
+        <div class="progress-bar" style="margin-top:10px">
+          <div class="progress-fill goals-fill" id="goalsProgressBar" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Nova meta</h3>
+        <div class="form-group">
+          <label class="form-label" for="goalText">Descrição da meta</label>
+          <input type="text" id="goalText" class="input-field" placeholder="Ex: Beber 2L de água" maxlength="100" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="goalFreq">Frequência</label>
+          <select id="goalFreq" class="input-field">
+            <option value="daily">Diária</option>
+            <option value="weekly">Semanal</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="saveGoal()">Adicionar meta</button>
+        <div class="suggested-goals">
+          <p class="suggested-label">Sugestões rápidas:</p>
+          <div class="suggested-chips" id="suggestedChips"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="goals-tabs">
+          <button class="tab-btn active" id="tabDailyBtn" onclick="switchGoalTab('daily', this)">Diárias</button>
+          <button class="tab-btn" id="tabWeeklyBtn" onclick="switchGoalTab('weekly', this)">Semanais</button>
+        </div>
+        <div id="goalsList" class="goals-list">
+          <p class="empty-text">Nenhuma meta cadastrada ainda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROGRESSO ===== -->
+    <section class="page" id="page-progress">
+      <div class="page-header">
+        <h1>📊 Meu Progresso</h1>
+        <p class="subtitle">Evolução dos últimos 7 dias</p>
+      </div>
+
+      <div class="cards-grid stats-cards">
+        <div class="card stat-card">
+          <span class="stat-icon">💧</span>
+          <span class="stat-label">Média de água/dia</span>
+          <span class="stat-value" id="statWaterAvg">0 ml</span>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-icon">🏃</span>
+          <span class="stat-label">Total de minutos</span>
+          <span class="stat-value" id="statActTotal">0 min</span>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-icon">😴</span>
+          <span class="stat-label">Média de sono/noite</span>
+          <span class="stat-value" id="statSleepAvg">0h</span>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-icon">🎯</span>
+          <span class="stat-label">Taxa de metas</span>
+          <span class="stat-value" id="statGoalsRate">0%</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">💧 Hidratação — 7 dias (ml)</h3>
+        <div class="bar-chart-wrap" id="waterChart"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">🏃 Atividade Física — 7 dias (min)</h3>
+        <div class="bar-chart-wrap" id="activityChart"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">😴 Sono — 7 dias (horas)</h3>
+        <div class="bar-chart-wrap" id="sleepChart"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">🎯 Metas concluídas — 7 dias</h3>
+        <div class="bar-chart-wrap" id="goalsChart"></div>
+      </div>
+
+      <div class="card progress-summary-card">
+        <h3 class="section-title">Resumo da semana</h3>
+        <p id="progressWeeklySummary" class="progress-summary-text">Carregando resumo...</p>
+      </div>
+    </section>
+
+    <!-- ===== CONTEÚDOS EDUCATIVOS ===== -->
+    <section class="page" id="page-content">
+      <div class="page-header">
+        <h1>📚 Aprenda sobre saúde</h1>
+        <p class="subtitle">Conteúdos educativos para uma vida mais saudável</p>
+      </div>
+
+      <div class="content-tabs-wrap">
+        <button class="tab-btn active" id="tabArticles" onclick="switchContentTab('articles', this)">📖 Artigos</button>
+        <button class="tab-btn" id="tabQuiz" onclick="switchContentTab('quiz', this)">🧠 Quiz</button>
+      </div>
+
+      <div id="contentArticles">
+        <div class="articles-grid" id="articlesGrid"></div>
+      </div>
+
+      <div id="contentQuiz" style="display:none">
+        <div class="card" id="quizCard">
+          <div id="quizContent"></div>
+        </div>
+      </div>
+
+      <!-- ARTICLE MODAL -->
+      <div class="modal-overlay" id="articleModal" style="display:none" onclick="closeArticleOutside(event)">
+        <div class="modal" id="articleModalBox">
+          <button class="modal-close" onclick="closeArticle()" aria-label="Fechar">✕</button>
+          <div id="articleContent"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PERFIL ===== -->
+    <section class="page" id="page-profile">
+      <div class="page-header">
+        <h1>👤 Perfil</h1>
+        <p class="subtitle">Suas preferências e configurações</p>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Dados pessoais</h3>
+        <div class="form-group">
+          <label class="form-label" for="profileName">Seu nome</label>
+          <input type="text" id="profileName" class="input-field" placeholder="Como posso te chamar?" maxlength="50" />
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Metas de saúde</h3>
+        <div class="form-group">
+          <label class="form-label" for="profileWaterGoal">Meta diária de água (ml)</label>
+          <input type="number" id="profileWaterGoal" class="input-field" placeholder="Ex: 2000" min="500" max="6000" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="profileActivityGoal">Meta semanal de atividade (minutos)</label>
+          <input type="number" id="profileActivityGoal" class="input-field" placeholder="Ex: 150" min="10" max="1000" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="profileSleepGoal">Meta de sono por noite (horas)</label>
+          <input type="number" id="profileSleepGoal" class="input-field" placeholder="Ex: 8" min="4" max="12" step="0.5" />
+        </div>
+        <button class="btn btn-primary btn-full" onclick="saveProfile()">Salvar configurações</button>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Pontuação e nível</h3>
+        <div class="profile-points-row">
+          <div>
+            <p class="profile-level-name" id="profileLevelName">Iniciante 🌱</p>
+            <p class="profile-level-pts" id="profileLevelPts">0 pontos</p>
+          </div>
+          <div class="level-badge" id="profileLevelBadge">🌱</div>
+        </div>
+        <div class="progress-bar" style="margin:12px 0 4px">
+          <div class="progress-fill points-fill" id="profileLevelBar" style="width:0%"></div>
+        </div>
+        <p class="level-next" id="profileLevelNext"></p>
+      </div>
+
+      <div class="card danger-card">
+        <h3 class="section-title danger-title">Zona de perigo</h3>
+        <p class="danger-desc">Ao limpar os dados, todas as suas informações serão apagadas permanentemente.</p>
+        <button class="btn btn-danger btn-full" onclick="confirmClearData()">🗑️ Limpar todos os meus dados</button>
+      </div>
+
+      <div class="card disclaimer-card">
+        <p class="disclaimer-text">⚠️ Este aplicativo possui finalidade educativa e de acompanhamento de hábitos. Ele não substitui orientação de profissionais de saúde.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <!-- CONFIRM MODAL -->
+  <div class="modal-overlay" id="confirmModal" style="display:none">
+    <div class="modal confirm-modal">
+      <h3 id="confirmTitle">Confirmar ação</h3>
+      <p id="confirmMessage">Tem certeza?</p>
+      <div class="confirm-buttons">
+        <button class="btn btn-ghost" onclick="closeConfirm()">Cancelar</button>
+        <button class="btn btn-danger" id="confirmOkBtn">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT GOAL MODAL -->
+  <div class="modal-overlay" id="editGoalModal" style="display:none">
+    <div class="modal confirm-modal">
+      <h3>Editar meta</h3>
+      <input type="hidden" id="editGoalId" />
+      <div class="form-group" style="margin-top:12px">
+        <label class="form-label" for="editGoalText">Descrição</label>
+        <input type="text" id="editGoalText" class="input-field" maxlength="100" />
+      </div>
+      <div class="confirm-buttons">
+        <button class="btn btn-ghost" onclick="closeEditGoal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveEditGoal()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
