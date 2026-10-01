@@ -43,8 +43,10 @@ function navigateTo(page) {
     case 'profile':    renderProfile();     break;
   }
 
-  // Scroll para o topo
-  document.getElementById('mainContent').scrollTop = 0;
+  // Scroll para o topo (mobile usa window, desktop usa mainContent)
+  window.scrollTo(0, 0);
+  const mc = document.getElementById('mainContent');
+  if (mc) mc.scrollTop = 0;
 }
 
 function initNavigation() {
@@ -663,17 +665,18 @@ function renderGoalsList() {
     return;
   }
 
-  const today = todayStr();
   list.innerHTML = goals.map(g => {
-    const done   = isGoalCompletedToday(g.id);
-    const freq   = g.freq === 'daily' ? 'Diária' : 'Semanal';
+    const done = isGoalCompletedToday(g.id);
+    const freq = g.freq === 'daily' ? 'Diária' : 'Semanal';
     return `
       <div class="goal-item ${done ? 'completed' : ''}" id="goal-item-${g.id}">
         <div class="goal-checkbox ${done ? 'checked' : ''}" onclick="toggleGoal(${g.id})" role="checkbox" aria-checked="${done}" tabindex="0">
           ${done ? '✓' : ''}
         </div>
-        <span class="goal-text">${escapeHtml(g.text)}</span>
-        <span class="goal-freq">${freq}</span>
+        <div class="goal-main">
+          <span class="goal-text">${escapeHtml(g.text)}</span>
+          <span class="goal-freq">${freq}</span>
+        </div>
         <div class="goal-actions">
           <button class="btn-icon" onclick="openEditGoal(${g.id})" aria-label="Editar meta" title="Editar">✏️</button>
           <button class="btn-icon" onclick="deleteGoal(${g.id})" aria-label="Excluir meta" title="Excluir">🗑️</button>
@@ -733,9 +736,10 @@ function openEditGoal(id) {
   const goals = getGoals();
   const goal  = goals.find(g => g.id === id);
   if (!goal) return;
-  document.getElementById('editGoalId').value = id;
+  document.getElementById('editGoalId').value   = id;
   document.getElementById('editGoalText').value = goal.text;
   document.getElementById('editGoalModal').style.display = 'flex';
+  document.body.classList.add('modal-open');
 }
 
 function saveEditGoal() {
@@ -751,6 +755,7 @@ function saveEditGoal() {
 function closeEditGoal() {
   const modal = document.getElementById('editGoalModal');
   if (modal) modal.style.display = 'none';
+  if (!isAnyModalOpen()) document.body.classList.remove('modal-open');
 }
 
 /* ============================================================
@@ -1073,15 +1078,26 @@ function openArticle(id) {
 
   const modal = document.getElementById('articleModal');
   if (modal) modal.style.display = 'flex';
+  document.body.classList.add('modal-open');
 }
 
 function closeArticle() {
   const modal = document.getElementById('articleModal');
   if (modal) modal.style.display = 'none';
+  if (!isAnyModalOpen()) document.body.classList.remove('modal-open');
 }
 
 function closeArticleOutside(event) {
   if (event.target === document.getElementById('articleModal')) closeArticle();
+}
+
+/* Verifica se algum modal está visivelmente aberto */
+function isAnyModalOpen() {
+  const ids = ['confirmModal', 'editGoalModal', 'articleModal'];
+  return ids.some(id => {
+    const el = document.getElementById(id);
+    return el && el.style.display !== 'none' && el.style.display !== '';
+  });
 }
 
 function renderQuiz() {
@@ -1260,19 +1276,23 @@ function showConfirm(title, message, onConfirm) {
   confirmCallback = onConfirm;
   const modal = document.getElementById('confirmModal');
   if (modal) modal.style.display = 'flex';
+  document.body.classList.add('modal-open');
   const okBtn = document.getElementById('confirmOkBtn');
   if (okBtn) okBtn.onclick = executeConfirm;
 }
 
 function executeConfirm() {
+  // Salva o callback ANTES de fechar (closeConfirm zera confirmCallback)
+  const cb = confirmCallback;
   closeConfirm();
-  if (typeof confirmCallback === 'function') confirmCallback();
+  if (typeof cb === 'function') cb();
 }
 
 function closeConfirm() {
   const modal = document.getElementById('confirmModal');
   if (modal) modal.style.display = 'none';
   confirmCallback = null;
+  if (!isAnyModalOpen()) document.body.classList.remove('modal-open');
 }
 
 function confirmClearData() {
@@ -1356,7 +1376,7 @@ function init() {
     if (e.target === document.getElementById('editGoalModal')) closeEditGoal();
   });
 
-  // Fechar modal de artigo com ESC
+  // Fechar modais com ESC
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeArticle();
